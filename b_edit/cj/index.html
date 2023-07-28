@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Hello World | Jcrop Demo</title>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.Jcrop.js"></script>
+		<link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
+
+	</head>
+
+	<body>
+		<style type="text/css">
+			html,
+			body {
+				margin: 0px;
+				padding: 0px;
+			}
+			.h100{ height: 100%; }
+			.center{display: -webkit-box;
+		        display: -ms-flexbox;
+		        display: -webkit-flex;
+		        display: flex;
+		        -webkit-box-pack: center;
+		        -ms-flex-pack: center;
+		        -webkit-justify-content: center;
+		        justify-content: center;
+		        -webkit-box-align: center;
+		        -ms-flex-align: center;
+		        -webkit-align-items: center;
+		        align-items: center;}
+
+			.tk{ width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 9; display: none; background: rgba(0, 0, 0, 0.7); }
+			
+			.jcr{ width: 780px; height: 500px; background: #fff; border-radius: 5px; }
+			.jcropimg{ width: 750px; height: 450px; }
+			.jcropimg img{ max-width: 750px; max-height: 450px; }
+			
+			.button{
+				box-sizing: border-box;
+			    display: inline-block;
+			    position: relative;
+			    height: 32px;
+			    padding: 0 1.5em;
+			    border: none;
+			    border-radius: 3px;
+			    background-color: #4a89dc;
+			    color: #fff;
+			    font-size: 14px;
+			    line-height: 30px;
+			    text-align: center;
+			    text-decoration: none;
+			    outline: none;
+			    cursor: pointer;
+			}
+		</style>
+		
+		<div class="tk">
+			<div class="center h100">
+				<div class="jcr" style="position: relative;">
+					<img class="ioc" style="position: absolute; top: -26px; right: -26px;" src="img/ioc.png"/>
+					<div class="jcropimg center">
+						<img src="" id="target" alt="[Jcrop Example]" />
+					</div>
+					<input type="hidden" id="x" name="x">
+					<input type="hidden" id="y" name="y">
+					<input type="hidden" id="w" name="w">
+					<input type="hidden" id="h" name="h">
+					<div class="center">
+						<input class="button" type="submit" onclick="checkCoords()" value="裁剪图像">
+					</div>
+					<canvas id="canImg" width="" height="" style="display: none;"></canvas>
+				</div>
+			</div>
+		</div>
+
+		
+		
+
+		<script type="text/javascript">
+			
+			function showJcrop(e){
+				$(".tk").show()
+				$("#target").attr("src",e)
+				$('#target').Jcrop({
+					onSelect: updateCoords
+				});
+			}
+			$(".ioc").click(function(){
+				$(".tk").hide()
+			})
+			
+			showJcrop("img/sago.jpg")
+			
+			function updateCoords(c) {
+				$('#x').val(c.x);
+				$('#y').val(c.y);
+				$('#w').val(c.w);
+				$('#h').val(c.h);
+			};
+
+			function checkCoords() {
+				if(parseInt($('#w').val())) {
+					var canvas = document.getElementById('canImg')
+					var context = canvas.getContext('2d');
+					canvas.width = $('#w').val();
+					canvas.height = $('#h').val();
+	
+					var canImg = new Image();
+					canImg.src = $("#target").attr("src");
+					canImg.onload = function() {
+						context.drawImage(canImg, $('#x').val()*-1, $('#y').val()*-1, canImg.width, canImg.height);
+						setTimeout(function() {
+							console.log(canvas.toDataURL())
+						}, 300)
+					}
+					return true;
+				};
+				alert('请先选择要裁剪的区域后，再提交。');
+				return false;
+			};
+		</script>
+	</body>
+
+</html>
