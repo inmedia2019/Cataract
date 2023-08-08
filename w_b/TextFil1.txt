@@ -1,1 +1,0 @@
-{"name":"vincent","email":"vincent@billboardpr.com","avatar":"http://shp.qpic.cn/bizmp/aaTr4XCUADAUEd50Z2KhWic6h2ibyiaJr688tUYTCExnia4Roya5bpHXJg/","mobile":"","userid":"vincent","openid":"oSHD9tsIgM8wzeV1HXxkkSUFmeWE","department":"360","position":"","weixinid":"","status":"1","isid":""}
